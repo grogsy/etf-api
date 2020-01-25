@@ -3,6 +3,7 @@ const FundInfo = require("./FundInfo");
 const GeoBreakdown = require("./GeoBreakdown");
 const Holding = require("./Holding");
 const Sector = require("./Sector");
+const User = require("./User");
 
 ETF.hasOne(FundInfo, { foreignKey: "etfId" });
 FundInfo.belongsTo(ETF);
@@ -21,5 +22,6 @@ module.exports = {
   FundInfo,
   GeoBreakdown,
   Holding,
-  Sector
+  Sector,
+  User
 };
