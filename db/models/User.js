@@ -27,9 +27,6 @@ const User = db.define(
 );
 
 User.prototype.correctPassword = function(password) {
-  console.log("password: " + password);
-  console.log("salt: " + this.salt);
-  console.log("this.password: " + this.password);
   return User.encryptPassword(password, this.salt) === this.password;
 };
 
