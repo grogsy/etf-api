@@ -9,16 +9,16 @@ const ApiKey = require("./ApiKey");
 User.hasOne(ApiKey);
 ApiKey.belongsTo(User);
 
-ETF.hasOne(FundInfo, { foreignKey: "etfId" });
+ETF.hasOne(FundInfo, { foreignKey: "etfId", onDelete: "cascade" });
 FundInfo.belongsTo(ETF);
 
-ETF.hasMany(Sector, { foreignKey: "etfId" });
+ETF.hasMany(Sector, { foreignKey: "etfId", onDelete: "cascade" });
 Sector.belongsTo(ETF);
 
-ETF.hasMany(Holding, { foreignKey: "etfId" });
+ETF.hasMany(Holding, { foreignKey: "etfId", onDelete: "cascade" });
 Holding.belongsTo(ETF);
 
-ETF.hasMany(GeoBreakdown, { foreignKey: "etfId" });
+ETF.hasMany(GeoBreakdown, { foreignKey: "etfId", onDelete: "cascade" });
 GeoBreakdown.belongsTo(ETF);
 
 module.exports = {
