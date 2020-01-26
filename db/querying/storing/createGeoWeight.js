@@ -5,6 +5,6 @@ module.exports = async function(etfId, weights) {
 
   for (let weight of weights) {
     newGeoWeight = await GeoBreakdown.create({ etfId, ...weight });
-    console.log("Country Weight successfully created: " + newGeoWeight.etfId);
+    // console.log("Country Weight successfully created: " + newGeoWeight.etfId);
   }
 };
