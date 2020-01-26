@@ -1,10 +1,8 @@
-const db = require("../db");
 const parsePage = require("../parsing");
 const storeETF = require("../db/querying/storing");
 const { Href } = require("../meta");
 
 module.exports = async function() {
-  // db.sync().then(async function() {
   let etfs = await Href.findAll();
   etfs = etfs.map(etf => etf.link);
 
@@ -17,5 +15,4 @@ module.exports = async function() {
     i++;
   }
   console.log("Done.");
-  // });
 };

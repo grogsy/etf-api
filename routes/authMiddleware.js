@@ -1,5 +1,5 @@
 const { ApiKey } = require("../db/models");
-const { ONE_MINUTE } = require("../constants");
+const { TWENTY_FOUR_HOURS } = require("../constants");
 
 function alreadyLoggedIn(req, res, next) {
   if (req.user) {
@@ -58,7 +58,7 @@ async function validateApiKey(req, res, next) {
   }
 
   // validate the key hasn't expired
-  if (Date.now() - Date.parse(key.updatedAt) > ONE_MINUTE) {
+  if (Date.now() - Date.parse(key.updatedAt) > TWENTY_FOUR_HOURS) {
     return res.status(401).json({
       status: 401,
       reason:
