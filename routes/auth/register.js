@@ -8,15 +8,13 @@ router.post("/", [alreadyLoggedIn, badPassword], async (req, res, next) => {
     req.login(user, err =>
       err
         ? next(err)
-        : res
-            .status(200)
-            .json({ status: 200, msg: "User created.", user: user.email })
+        : res.json({ status: 200, user: user.email, msg: "User created." })
     );
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       res
-        .status(200)
-        .json({ status: 200, reason: "That email is currently in use." });
+        .status(409)
+        .json({ status: 409, reason: "That email is currently in use." });
     } else if (error.name === "SequelizeValidationError") {
       res.status(400).json({ status: 400, reason: "Invalid Email." });
     } else {
