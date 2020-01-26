@@ -1,19 +1,9 @@
-// middleware here to check:
-//      -if api key is valid
-//      -if user is currently logged in
-//
-// example api key validator to check api key is valid
-// function isApiKeyValid(req, res, next) {
-//   let token = Tokens.findOne({ where: { key: req.query.key } });
-//   if (!token) {
-//     return res.status(403).json({ "403": "Unauthorized" });
-//   }
-//   next();
-// }
+const { ApiKey } = require("../db/models");
+const { ONE_MINUTE } = require("../constants");
 
 function alreadyLoggedIn(req, res, next) {
   if (req.user) {
-    return res.json({ msg: "Already logged in." });
+    return res.json({ status: 204, msg: "Already logged in." });
   } else {
     next();
   }
@@ -21,7 +11,7 @@ function alreadyLoggedIn(req, res, next) {
 
 function notLoggedIn(req, res, next) {
   if (!req.user) {
-    return res.json({ msg: "Not logged in" });
+    return res.json({ status: 401, msg: "Not logged in" });
   } else {
     next();
   }
@@ -38,8 +28,51 @@ function badPassword(req, res, next) {
   }
 }
 
+function unauthorizedAccess(req, res, next) {
+  if (!req.user) {
+    return res
+      .status(403)
+      .json({ status: 403, reason: "Unauthorized/not logged in." });
+  } else {
+    next();
+  }
+}
+
+async function validateApiKey(req, res, next) {
+  let { key } = req.query;
+
+  // validate the key exists on the url param
+  if (!key) {
+    return res
+      .status(400)
+      .json({ status: 400, reason: "API key is required." });
+  }
+
+  // validate the key belongs to the current user
+  key = await ApiKey.findOne({ where: { value: key, userId: req.user.id } });
+  if (!key) {
+    return res.status(401).json({
+      status: 401,
+      reason: "The key provided does not match with the current user."
+    });
+  }
+
+  // validate the key hasn't expired
+  if (Date.now() - Date.parse(key.updatedAt) > ONE_MINUTE) {
+    return res.status(401).json({
+      status: 401,
+      reason:
+        "This API key is expired and can no longer be used. You must generate a new API key to continue."
+    });
+  }
+
+  next();
+}
+
 module.exports = {
   alreadyLoggedIn,
   notLoggedIn,
-  badPassword
+  badPassword,
+  unauthorizedAccess,
+  validateApiKey
 };
