@@ -35,4 +35,6 @@ module.exports = async function(etf) {
   if (etf.geographicalBreakdown) {
     await createGeoWeight(newETF.id, etf.geographicalBreakdown);
   }
+
+  return newETF;
 };
