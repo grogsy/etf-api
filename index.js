@@ -1,38 +1,24 @@
-const express = require("express");
-const server = express();
+const server = require("./server");
 const db = require("./db");
+const updateETFs = require("./db/querying/updating");
+const http = require("http");
 
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+const { TWENTY_FOUR_HOURS, FIVE_MINUTES } = require("./constants");
 
-const api = require("./routes/api");
-server.use("/api", api);
+db.sync(/*{ force: true }*/).then(() => {
+  server.listen(server.etc.port, async () => {
+    console.log(`up on ${server.etc.port}`);
 
-// omit null values from being returned on row fetches
-server.set("json replacer", (k, v) => (v === null ? undefined : v));
-
-const PORT = 4000;
-const TWENTY_FOUR_HOURS = 86400000;
-
-db.sync({ force: true }).then(() => {
-  server.listen(PORT, async () => {
-    console.log(`up on ${PORT}`);
-
-    const parsePage = require("./parsing");
-    const storeETF = require("./db/storing");
-    const testUrl =
-      "https://www.ssga.com/us/en/individual/etfs/funds/spdr-blackstone-gso-senior-loan-etf-srln";
-
-    const etf = await parsePage(testUrl);
-    await storeETF(etf);
-
-    //   setInterval(() => {
-    //     console.log("Server is updating data...")
-    //     updateDb();
-    //     console.log('...done.')
-    //   }, TWENTY_FOUR_HOURS);
+    // if deployed on heroku ping page this is hosted on so it doesn't sleep
     // setInterval(() => {
-    //   console.log("half minute interval running");
-    // }, 30000);
+    //   console.log("keep alive ping");
+    //   http.get("http://spdr-etf-api.herokuapp.com");
+    // }, FIVE_MINUTES);
+
+    setInterval(async () => {
+      console.log("Server is updating data...");
+      await updateETFs();
+      console.log("...done.");
+    }, TWENTY_FOUR_HOURS);
   });
 });
