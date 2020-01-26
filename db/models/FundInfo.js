@@ -14,10 +14,10 @@ const FundInfo = db.define(
       type: Sequelize.STRING
     },
     grossExpenseRatio: {
-      type: Sequelize.DECIMAL(4, 2)
+      type: Sequelize.DECIMAL(5, 2)
     },
     netExpenseRatio: {
-      type: Sequelize.DECIMAL(4, 2)
+      type: Sequelize.DECIMAL(5, 2)
     },
     investmentManager: {
       type: Sequelize.STRING

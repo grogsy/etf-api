@@ -6,13 +6,14 @@ const GeoBreakdown = db.define(
   {
     country: {
       type: Sequelize.STRING,
-      allowNull: false,
-      validate: {
-        notEmtpy: true
-      }
+      allowNull: false
+      // for some reason this validator breaks this model ONLY
+      // validate: {
+      //   notEmtpy: true
+      // }
     },
     weight: {
-      type: Sequelize.DECIMAL(4, 2),
+      type: Sequelize.DECIMAL(5, 2),
       allowNull: false
     }
   },
