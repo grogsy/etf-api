@@ -30,7 +30,8 @@ router.post("/generate", notLoggedIn, async (req, res, next) => {
     res.json({
       key: key.value,
       msg: "API key created successfully.",
-      usage: "Append ?key=<YOUR_API_KEY_HERE> to url paths calling the API."
+      usage:
+        "Append ?key=<YOUR_API_KEY_HERE> to url paths calling the API. This key will expire after 24 hours."
     });
   } catch (error) {
     next(error);

@@ -15,18 +15,9 @@ router.get(
   async (req, res, next) => {
     try {
       const etfs = await ETF.findAll({
-        // remove this after testing, this endpoint should only list etf tickers
-        // it would look like:
-        // attributes: ['ticker']
-        include: [
-          { model: FundInfo, attributes: { exclude: ["id", "etfId"] } },
-          { model: Holding, attributes: { exclude: ["id", "etfId"] } },
-          { model: Sector, attributes: { exclude: ["id", "etfId"] } },
-          { model: GeoBreakdown, attributes: { exclude: ["id", "etfId"] } }
-        ],
-        attributes: { exclude: ["id"] }
+        attributes: ["ticker"]
       });
-      res.json(etfs);
+      res.json({ availableEtfs: etfs });
     } catch (error) {
       next(error);
     }
@@ -44,7 +35,14 @@ router.get(
         },
         include: [
           { model: FundInfo, attributes: { exclude: ["id", "etfId"] } },
-          { model: Holding, attributes: { exclude: ["id", "etfId"] } },
+          {
+            model: Holding,
+            // this option might need to be used when limiting the holdings return to strictly 10
+            // separate: true,
+            // limit: 10,
+            // order: [['weight', 'DESC']],
+            attributes: { exclude: ["id", "etfId"] }
+          },
           { model: Sector, attributes: { exclude: ["id", "etfId"] } },
           { model: GeoBreakdown, attributes: { exclude: ["id", "etfId"] } }
         ],
