@@ -1,4 +1,4 @@
-const { Sector } = require("../models");
+const { Sector } = require("../../models");
 
 module.exports = async function(etfId, sectors, type) {
   let newSector;

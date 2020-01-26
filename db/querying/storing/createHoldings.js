@@ -1,4 +1,4 @@
-const { Holding } = require("../models");
+const { Holding } = require("../../models");
 
 module.exports = async function(etfId, holdings, type) {
   let newHolding;

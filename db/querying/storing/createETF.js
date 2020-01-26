@@ -1,4 +1,4 @@
-const { ETF } = require("../models");
+const { ETF } = require("../../models");
 
 module.exports = async function(name, ticker) {
   const newETF = await ETF.create({ name, ticker });
