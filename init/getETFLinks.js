@@ -1,9 +1,10 @@
 const { Builder, By } = require("selenium-webdriver");
-const chrome = require("selenium-webdriver/chrome");
-let options = new chrome.Options();
-options.addArguments("--headless");
-options.addArguments("--disable-gpu");
-options.addArguments("--no-sandbox");
+// const chrome = require("selenium-webdriver/chrome");
+// let options = new chrome.Options();
+// options.addArguments("--headless");
+// options.addArguments("--enable-javascript");
+// options.addArguments("--disable-gpu");
+// options.addArguments("--no-sandbox");
 const { Href } = require("../meta");
 
 const url = "https://www.ssga.com/us/en/individual/etfs/fund-finder";
