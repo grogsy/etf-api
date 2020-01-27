@@ -17,6 +17,4 @@ async function initETFDb() {
   console.log("Done.");
 }
 
-initETFDb();
-
 module.exports = initETFDb;
