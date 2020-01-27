@@ -1,7 +1,7 @@
 # Preface 
 
 # API Documentation & Access
-Postman documentatin can be found at: https://documenter.getpostman.com/view/8410071/SWTA9yGU?version=latest
+Postman documentation can be found at: https://documenter.getpostman.com/view/8410071/SWTA9yGU?version=latest. The documentation describes how to use the API.
 
 This project is deployed at: https://spdr-etf-api.herokuapp.com/
 
