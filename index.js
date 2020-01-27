@@ -6,7 +6,7 @@ const updateETFs = require("./db/querying/updating");
 const { TWENTY_FOUR_HOURS, FIVE_MINUTES } = require("./constants");
 
 db.sync({ force: true }).then(() => {
-  server.listen(server.etc.port, async () => {
+  server.listen(process.env.PORT || server.etc.port, async () => {
     console.log(`up on ${server.etc.port}`);
 
     // if deployed on heroku ping page this is hosted on so it doesn't sleep
