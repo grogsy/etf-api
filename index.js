@@ -5,7 +5,7 @@ const updateETFs = require("./db/querying/updating");
 
 const { TWENTY_FOUR_HOURS, FIVE_MINUTES } = require("./constants");
 
-db.sync({ force: true }).then(() => {
+db.sync().then(() => {
   server.listen(process.env.PORT || server.etc.port, async () => {
     console.log(`up on ${server.etc.port}`);
 
