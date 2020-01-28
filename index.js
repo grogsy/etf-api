@@ -7,7 +7,7 @@ const { TWENTY_FOUR_HOURS, FIVE_MINUTES } = require("./constants");
 
 db.sync().then(() => {
   server.listen(process.env.PORT || server.etc.port, async () => {
-    console.log(`up on ${server.etc.port}`);
+    // console.log(`up on ${server.etc.port}`);
 
     // if deployed on heroku ping page this is hosted on so it doesn't sleep
     setInterval(() => {
